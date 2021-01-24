@@ -88,16 +88,16 @@ namespace JamsRecords
                 }
                 if (choice == "a")
                 {
-                    Console.WriteLine("Would you like to (a)dd an album, (v)iew all albums by release date, or (e)nter a band name to view all albums? ");
-                    var userChoice = Console.ReadLine().ToUpper().Trim();
+                    Console.WriteLine("Would you like to (a)dd an album, (v)iew all albums by release date, or (e)nter a band name to view its discography? ");
+                    var userChoice = Console.ReadLine().ToLower().Trim();
                     if (userChoice == "a")
                     {
                         Console.WriteLine("What is the Title of the new album? ");
                         var newTitle = Console.ReadLine();
                         Console.WriteLine("Is this album Explicit? True or False please. ");
                         var newIsExplicit = bool.Parse(Console.ReadLine());
-                        Console.WriteLine("When was the album released? yyyymmdd ");
-                        var newReleaseDate = Console.ReadLine();
+                        Console.WriteLine("When was the album released? yyyy-mm-dd");
+                        var newReleaseDate = DateTime.Parse(Console.ReadLine());
                         Console.WriteLine("Please enter the that bands BandId");
                         var newBandId = int.Parse(Console.ReadLine());
 
@@ -108,6 +108,29 @@ namespace JamsRecords
                             ReleaseDate = newReleaseDate,
                             BandId = newBandId,
                         };
+                        context.Albums.Add(newAlbum);
+                        context.SaveChanges();
+                    }
+                    if (userChoice == "v")
+                    {
+                        var albumsInOrder = context.Albums.OrderBy(albumsReleaseDate => albumsReleaseDate.ReleaseDate);
+
+                        Console.WriteLine("Here is your list");
+
+                        foreach (var album in albumsInOrder)
+
+                        {
+                            Console.WriteLine($"{album.Title} { album.ReleaseDate}");
+
+                        }
+                    }
+                    if (userChoice == "e")
+                    {
+                        Console.WriteLine("Write the name of the band to see its discography");
+                        var chosenBand = Console.ReadLine();
+                        context.Bands.Where(band => band.Name == chosenBand).Include(chosenBand => chosenBand.joinedBandsToAlbums);
+
+
                     }
                 }
 
