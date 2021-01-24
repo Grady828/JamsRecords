@@ -1,4 +1,4 @@
-namespace Jamsrecords
+namespace JamsRecords
 {
     public class Songs
     {

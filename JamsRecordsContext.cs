@@ -2,16 +2,19 @@ using System;
 using JamsRecords.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using JamsRecords;
 
-namespace Jamsrecords
+
+namespace JamsRecords
 {
-    public class JamRecordsContext : DbContext
+    public class JamsRecordsContext : DbContext
     {
         public DbSet<Bands> Bands { get; set; }
+        public DbSet<Albums> Albums { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("server=localhost;database=JamsRecords");
+
+
         }
     }
 }
