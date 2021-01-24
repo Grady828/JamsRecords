@@ -17,13 +17,12 @@ namespace JamsRecords
             {
                 Console.WriteLine();
                 Console.WriteLine("Please choose from the following");
-                Console.WriteLine("(B)ands (A)lbums (S)ongs (V)iew or (Q)uit");
+                Console.WriteLine("(B)ands (A)lbums (S)ongs (V)iew Bands or (Q)uit");
                 var choice = Console.ReadLine().ToLower().Trim();
                 if (choice == "q")
                 {
                     break;
                 }
-
                 if (choice == "b")
                 {
                     Console.WriteLine("Would you like to (s)ign (r)elease or (v)iew all bands? ");
@@ -128,11 +127,55 @@ namespace JamsRecords
                     {
                         Console.WriteLine("Write the name of the band to see its discography");
                         var chosenBand = Console.ReadLine();
-                        context.Bands.Where(band => band.Name == chosenBand).Include(chosenBand => chosenBand.joinedBandsToAlbums);
+                        var chosenBandsAlbums = context.Albums.Include(album => album.joinedBandsToAlbums).Where(album => album.joinedBandsToAlbums.Name == chosenBand);
+                        foreach (var album in chosenBandsAlbums)
+                        {
+                            Console.WriteLine($"The selected bands albums are {album.Title}");
+                        }
 
 
                     }
                 }
+                if (choice == "s")
+                {
+                    Console.WriteLine("What is the Track number of the new song? ");
+                    var newTrackNumber = int.Parse(Console.ReadLine());
+                    Console.WriteLine("What is the songs name?. ");
+                    var newTitle = Console.ReadLine();
+                    Console.WriteLine("How long is the song? ");
+                    var newDuration = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Please enter the that songs AlbumId");
+                    var newAlbumId = int.Parse(Console.ReadLine());
+
+                    var newSong = new Songs
+                    {
+                        TrackNumber = newTrackNumber,
+                        Title = newTitle,
+                        Duration = newDuration,
+                        AlbumId = newAlbumId,
+                    };
+                    context.Songs.Add(newSong);
+                    context.SaveChanges();
+                }
+                if (choice == "v")
+                {
+                    Console.WriteLine("View Bands that are (s)igned or (u)nsigned? ");
+                    var userChoice = Console.ReadLine();
+                    if (userChoice == "s")
+                    {
+                        var Bands = context.Bands;
+                        var bandsThatAreSigned = Bands.Where(Bands => Bands.IsSigned == true);
+                        Console.WriteLine($"{bandsThatAreSigned} ");
+                    }
+                    if (userChoice == "u")
+                    {
+                        var Bands = context.Bands;
+                        var bandsThatAreSigned = Bands.Where(Bands => Bands.IsSigned == false);
+                        Console.WriteLine($"{bandsThatAreSigned} ");
+                    }
+                }
+
+
 
             }
         }
