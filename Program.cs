@@ -17,7 +17,7 @@ namespace JamsRecords
             {
                 Console.WriteLine();
                 Console.WriteLine("Please choose from the following");
-                Console.WriteLine("(B)ands (A)lbums (S)ongs (V)iew Bands or (Q)uit");
+                Console.WriteLine("(B)ands (A)lbums (S)ongs (V)iew signed/unsigned Bands or (Q)uit");
                 var choice = Console.ReadLine().ToLower().Trim();
                 if (choice == "q")
                 {
@@ -127,7 +127,9 @@ namespace JamsRecords
                     {
                         Console.WriteLine("Write the name of the band to see its discography");
                         var chosenBand = Console.ReadLine();
-                        var chosenBandsAlbums = context.Albums.Include(album => album.joinedBandsToAlbums).Where(album => album.joinedBandsToAlbums.Name == chosenBand);
+                        var chosenBandsAlbums = context.Albums.
+                             Include(album => album.Band).
+                             Where(album => album.Band.Name == chosenBand);
                         foreach (var album in chosenBandsAlbums)
                         {
                             Console.WriteLine($"The selected bands albums are {album.Title}");
@@ -165,13 +167,23 @@ namespace JamsRecords
                     {
                         var Bands = context.Bands;
                         var bandsThatAreSigned = Bands.Where(Bands => Bands.IsSigned == true);
-                        Console.WriteLine($"{bandsThatAreSigned} ");
+                        foreach (var Band in bandsThatAreSigned)
+
+                        {
+                            Console.WriteLine($"{Band.Name} ");
+                        }
+
                     }
                     if (userChoice == "u")
                     {
                         var Bands = context.Bands;
-                        var bandsThatAreSigned = Bands.Where(Bands => Bands.IsSigned == false);
-                        Console.WriteLine($"{bandsThatAreSigned} ");
+                        var bandsThatAreNotSigned = Bands.Where(Bands => Bands.IsSigned == false);
+                        foreach (var Band in bandsThatAreNotSigned)
+                        {
+                            Console.WriteLine($"{Band.Name} ");
+                        }
+
+
                     }
                 }
 

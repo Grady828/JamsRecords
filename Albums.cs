@@ -9,7 +9,7 @@ namespace JamsRecords
         public bool IsExplicit { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int BandId { get; set; }
-        public Bands joinedBandsToAlbums { get; set; }
+        public Bands Band { get; set; }
 
     }
 }

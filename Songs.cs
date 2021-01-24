@@ -7,7 +7,7 @@ namespace JamsRecords
         public string Title { get; set; }
         public int Duration { get; set; }
         public int AlbumId { get; set; }
-        public Albums joinedAlbumsToSongs { get; set; }
+        public Albums Album { get; set; }
 
 
     }
