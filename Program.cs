@@ -146,7 +146,7 @@ namespace JamsRecords
                     Console.WriteLine("What is the Track number of the new song? ");
                     var newTrackNumber = int.Parse(Console.ReadLine());
                     Console.WriteLine("What is the songs name?. ");
-                    var newTitle = Console.ReadLine();
+                    var newName = Console.ReadLine();
                     Console.WriteLine("How long is the song? ");
                     var newDuration = int.Parse(Console.ReadLine());
                     Console.WriteLine("Please enter the name of Album");
@@ -155,7 +155,7 @@ namespace JamsRecords
                     var newSong = new Songs
                     {
                         TrackNumber = newTrackNumber,
-                        Title = newTitle,
+                        Name = newName,
                         Duration = newDuration,
                         AlbumId = newSongsAlbum.Id,
                     };
