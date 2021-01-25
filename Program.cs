@@ -89,6 +89,8 @@ namespace JamsRecords
                 {
                     Console.WriteLine("Would you like to (a)dd an album, (v)iew all albums by release date, or (e)nter a band name to view its discography? ");
                     var userChoice = Console.ReadLine().ToLower().Trim();
+
+
                     if (userChoice == "a")
                     {
                         Console.WriteLine("What is the Title of the new album? ");
@@ -97,15 +99,16 @@ namespace JamsRecords
                         var newIsExplicit = bool.Parse(Console.ReadLine());
                         Console.WriteLine("When was the album released? yyyy-mm-dd");
                         var newReleaseDate = DateTime.Parse(Console.ReadLine());
-                        Console.WriteLine("Please enter the that bands BandId");
-                        var newBandId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Please enter the that bands name");
+                        var newAlbumsBand = context.Bands.FirstOrDefault(band => band.Name == Console.ReadLine());
+
 
                         var newAlbum = new Albums
                         {
                             Title = newTitle,
                             IsExplicit = newIsExplicit,
                             ReleaseDate = newReleaseDate,
-                            BandId = newBandId,
+                            BandId = newAlbumsBand.Id,
                         };
                         context.Albums.Add(newAlbum);
                         context.SaveChanges();
@@ -146,15 +149,15 @@ namespace JamsRecords
                     var newTitle = Console.ReadLine();
                     Console.WriteLine("How long is the song? ");
                     var newDuration = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Please enter the that songs AlbumId");
-                    var newAlbumId = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Please enter the name of Album");
+                    var newSongsAlbum = context.Albums.FirstOrDefault(album => album.Title == Console.ReadLine());
 
                     var newSong = new Songs
                     {
                         TrackNumber = newTrackNumber,
                         Title = newTitle,
                         Duration = newDuration,
-                        AlbumId = newAlbumId,
+                        AlbumId = newSongsAlbum.Id,
                     };
                     context.Songs.Add(newSong);
                     context.SaveChanges();
