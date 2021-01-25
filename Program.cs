@@ -61,11 +61,6 @@ namespace JamsRecords
                         context.Bands.Add(newBand);
                         context.SaveChanges();
 
-
-                    }
-                    if (choice == "a")
-                    {
-
                     }
                     if (userChoice == "r")
                     {
