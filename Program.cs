@@ -115,10 +115,8 @@ namespace JamsRecords
                         Console.WriteLine("Here is your list");
 
                         foreach (var album in albumsInOrder)
-
                         {
                             Console.WriteLine($"{album.Title} { album.ReleaseDate}");
-
                         }
                     }
                     if (userChoice == "e")
